@@ -8,7 +8,6 @@
 using namespace std;
 
 namespace Common{
-namespace String{
 
 string WS2S(const wstring& ws);
 
@@ -48,6 +47,6 @@ void OutputDebugMessage(int size, const wchar_t* fmt, ...);
 
 void OutputDebugMessage(int size, const char* fmt, ...);
 
-}}
+}
 
 #endif

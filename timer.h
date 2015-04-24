@@ -7,6 +7,7 @@
 
 #pragma comment(lib, "winmm.lib")//timeGetTime
 
+namespace Common {
 class timer
 {
 public:
@@ -57,5 +58,5 @@ private:
 
 	bool highPrecision;
 };
-
+}
 #endif

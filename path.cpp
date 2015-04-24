@@ -1,9 +1,9 @@
 #include "stdafx.h"
-#include "common_path.h"
+#include "path.h"
 #include <direct.h>
 
 namespace Common{
-namespace Path{ 
+
 	string GetExeDir(int parentLevel /*= 0*/)
 	{
 		char path[MAX_PATH] = {0};
@@ -68,7 +68,7 @@ namespace Path{
 		char dir[_MAX_DIR];
 		char fname[_MAX_FNAME];
 		char ext[_MAX_EXT];
-		_splitpath(path.c_str(), drive, dir, fname, ext);
+		_splitpath_s(path.c_str(), drive, dir, fname, ext);
 		return string(fname);
 	}
 
@@ -78,7 +78,7 @@ namespace Path{
 		char dir[_MAX_DIR];
 		char fname[_MAX_FNAME];
 		char ext[_MAX_EXT];
-		_splitpath(path.c_str(), drive, dir, fname, ext);
+		_splitpath_s(path.c_str(), drive, dir, fname, ext);
 		return string(ext);
 	}
 
@@ -88,9 +88,9 @@ namespace Path{
 		char dir[_MAX_DIR];
 		char fname[_MAX_FNAME];
 		char ext[_MAX_EXT];
-		_splitpath(path.c_str(), drive, dir, fname, ext);
+		_splitpath_s(path.c_str(), drive, dir, fname, ext);
 		return string(fname) + string(ext);
 	}
 
-}}
+};
 

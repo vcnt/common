@@ -8,7 +8,6 @@
 using namespace std;
 
 namespace Common{
-namespace Path{
 /*
  * get directory where executable is in.
  */
@@ -46,6 +45,6 @@ basic_string<T, char_traits<T>, allocator<T>> GetPathFullname(const T* path)
 	return basic_string<T>(fname) + basic_string<T>(ext);
 }
 
-}}
+}
 
 #endif

@@ -8,7 +8,6 @@
 using namespace std;
 
 namespace Common{
-namespace Path{
 /*
  * get directory where executable is in.
  */
@@ -27,6 +26,6 @@ string GetPathExtension(const string& path);
 
 string GetPathFullname(const string& path);
 
-}}
+};
 
 #endif

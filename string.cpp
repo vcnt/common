@@ -1,5 +1,5 @@
 #include "stdafx.h"
-#include "common_string.h"
+#include "string.h"
 #include <stdio.h>
 #include <wchar.h>
 #include <stdarg.h>
@@ -9,7 +9,6 @@
 #include <direct.h>
 
 namespace Common{
-namespace String{ 
 
 	string WS2S(const wstring& ws)
 	{
@@ -388,5 +387,5 @@ namespace String{
 		return ret;
 	}
 
-}}
+}
 

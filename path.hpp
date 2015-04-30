@@ -4,47 +4,200 @@
 #include <vector>
 #include <string>
 #include <windows.h>
+#include "winapi.hpp"
 
 using namespace std;
 
 namespace Common{
-/*
- * get directory where executable is in.
- */
-//string GetExeDir(int parentLevel = 0);
 
-/*
- * get current working directory.
- */
-//string GetCurrentDir();
+#define get_exe_dir				GetExeDir<char>
+#define get_current_dir			GetCurrentDir<char>
+#define get_path_folder_name	GetPathFolderName<char>
+#define get_path_directory		GetPathDirectory<char>
+#define get_path_filename		GetPathFilename<char>
+#define get_path_extension		GetPathExtension<char>
+#define get_path_fullname		GetPathFullname<char>
+#define get_path_drive			GetPathDrive<char>
 
-//string GetPathFolderName(const string& path);
+	//************************************
+	// Method:    GetExeDir
+	// FullName:  Common<T>::GetExeDir
+	// Access:    public 
+	// Returns:   
+	// Qualifier:
+	// Parameter: int parentLevel
+	//************************************
+	template<typename T>
+	basic_string<T> GetExeDir(int parentLevel = 0)
+	{
+		T path[MAX_PATH] = {0};
+		if (!GETMODULEFILENAME(T)(NULL, path, sizeof(path)))
+			return LITERAL(T, "");
 
-//string GetPathFilename(const string& path);
+		T* tmp = STRRCHR(T)(path, '\\');
+		if (tmp)
+			*(tmp + 1) = '\0';
 
-//string GetPathExtension(const string& path);
+		while (parentLevel--) {
+			*tmp = '\0';
+			tmp = STRRCHR(T)(path, '\\');
+			if (!tmp) {
+				path[STRLEN(T)(path)] = '\\';
+				break;
+			}else
+				*(tmp + 1) = '\0';
+		}
 
+		return basic_string<T>(path);
+	}
 
-wstring w = GetPathFullname<wchar_t>(L"c:\abc.txt");
-string c = GetPathFullname<char>("c:\abc.txt");
+	//************************************
+	// Method:    GetCurrentDir
+	// FullName:  Common<T>::GetCurrentDir
+	// Access:    public 
+	// Returns:   
+	// Qualifier:
+	//************************************
+	template<typename T>
+	basic_string<T> GetCurrentDir()
+	{
+		T path[FILENAME_MAX] = {0};
+		//if (!_getcwd(path, sizeof(path)))
+		if (!GETCURRENTDIRECTORY(T)(FILENAME_MAX, path))
+			return LITERAL(T, "");
+		path[STRLEN(T)(path)] = '\\';
+		return basic_string<T>(path);
+	}
 
+	//************************************
+	// Method:    GetPathFolderName
+	// FullName:  Common<T>::GetPathFolderName
+	// Access:    public 
+	// Returns:   
+	// Qualifier:
+	// Parameter: const basic_string<T> & path
+	//************************************
+	template<typename T>
+	basic_string<T> GetPathFolderName(const T* path)
+	{
+		typedef basic_string<T> str;
 
-template<typename T>
-basic_string<T, char_traits<T>, allocator<T>> GetPathFullname(const T* path)
-{
-	T drive[_MAX_DRIVE];
-	T dir[_MAX_DIR];
-	T fname[_MAX_FNAME];
-	T ext[_MAX_EXT];
-	
-	if (typeid(T).name() == "char")
-		_splitpath(reinterpret_cast<const char*>(path), drive, dir, fname, ext);
-	else
-		_wsplitpath(reinterpret_cast<const wchar_t*>(path), drive, dir, fname, ext);
+		T drive[_MAX_DRIVE];
+		T dir[_MAX_DIR];
+		T fname[_MAX_FNAME];
+		T ext[_MAX_EXT];
+		SPLITPATH_S(T)(path, drive, _MAX_DRIVE, dir, _MAX_DIR, fname, _MAX_FNAME, ext, _MAX_EXT);
 
-	return basic_string<T>(fname) + basic_string<T>(ext);
-}
+		str folderName;
+		str directory(dir);
+		str::size_type end = directory.find_last_of('\\');
+		if (end != str::npos) {
+			str tmp = directory.substr(0, end);
+			str::size_type beg = tmp.find_last_of('\\');
+			if (beg != str::npos && beg < end)
+				folderName = directory.substr(beg + 1, end - beg - 1);
+		}
+		if (folderName.empty() && STRLEN(T)(drive) != 0)
+			folderName.append(1, drive[0]);
 
+		return folderName;
+	}
+
+	//************************************
+	// Method:    GetPathDirectory
+	// FullName:  Common<T>::GetPathDirectory
+	// Access:    public 
+	// Returns:   
+	// Qualifier:
+	// Parameter: const basic_string<T> & path
+	//************************************
+	template<typename T>
+	basic_string<T> GetPathDirectory(const T* path)
+	{
+		typedef basic_string<T> str;
+		T drive[_MAX_DRIVE];
+		T dir[_MAX_DIR];
+		T fname[_MAX_FNAME];
+		T ext[_MAX_EXT];
+		SPLITPATH_S(T)(path, drive, _MAX_DRIVE, dir, _MAX_DIR, fname, _MAX_FNAME, ext, _MAX_EXT);
+		return str(drive) + str(dir);
+	}
+
+	//************************************
+	// Method:    GetPathFilename
+	// FullName:  Common<T>::GetPathFilename
+	// Access:    public 
+	// Returns:   
+	// Qualifier:
+	// Parameter: const basic_string<T> & path
+	//************************************
+	template<typename T>
+	basic_string<T> GetPathFilename(const T* path)
+	{
+		T drive[_MAX_DRIVE];
+		T dir[_MAX_DIR];
+		T fname[_MAX_FNAME];
+		T ext[_MAX_EXT];
+		SPLITPATH_S(T)(path, drive, _MAX_DRIVE, dir, _MAX_DIR, fname, _MAX_FNAME, ext, _MAX_EXT);
+		return basic_string<T>(fname);
+	}
+
+	//************************************
+	// Method:    GetPathExtension
+	// FullName:  Common<T>::GetPathExtension
+	// Access:    public 
+	// Returns:   
+	// Qualifier:
+	// Parameter: const basic_string<T> & path
+	//************************************
+	template<typename T>
+	basic_string<T> GetPathExtension(const T* path)
+	{
+		T drive[_MAX_DRIVE];
+		T dir[_MAX_DIR];
+		T fname[_MAX_FNAME];
+		T ext[_MAX_EXT];
+		SPLITPATH_S(T)(path, drive, _MAX_DRIVE, dir, _MAX_DIR, fname, _MAX_FNAME, ext, _MAX_EXT);
+		return basic_string<T>(ext);
+	}
+
+	//************************************
+	// Method:    GetPathFullname
+	// FullName:  Common<T>::GetPathFullname
+	// Access:    public 
+	// Returns:   
+	// Qualifier:
+	// Parameter: const T * path
+	//************************************
+	template<typename T>
+	basic_string<T> GetPathFullname(const T* path)
+	{	
+		T drive[_MAX_DRIVE];
+		T dir[_MAX_DIR];
+		T fname[_MAX_FNAME];
+		T ext[_MAX_EXT];
+		SPLITPATH_S(T)(path, drive, _MAX_DRIVE, dir, _MAX_DIR, fname, _MAX_FNAME, ext, _MAX_EXT);
+		return basic_string<T>(fname) + basic_string<T>(ext);
+	}
+
+	//************************************
+	// Method:    GetPathFullname
+	// FullName:  Common<T>::GetPathFullname
+	// Access:    public 
+	// Returns:   
+	// Qualifier:
+	// Parameter: const T * path
+	//************************************
+	template<typename T>
+	basic_string<T> GetPathDrive(const T* path)
+	{	
+		T drive[_MAX_DRIVE];
+		T dir[_MAX_DIR];
+		T fname[_MAX_FNAME];
+		T ext[_MAX_EXT];
+		SPLITPATH_S(T)(path, drive, _MAX_DRIVE, dir, _MAX_DIR, fname, _MAX_FNAME, ext, _MAX_EXT);
+		return basic_string<T>(drive);
+	}
 }
 
 #endif

@@ -2,7 +2,9 @@
 #define COMMON_COMMON_H
 
 #include "string.h"
-#include "path.h"
+#include "string.hpp"
+//#include "path.h"
+#include "path.hpp"
 #include "timer.h"
 
 using namespace Common;

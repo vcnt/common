@@ -85,4 +85,10 @@ void test_string_hpp()
 	OutputDebugMessage<char>(100, "%s%d%c%f%x", "abc", 1, 'X', 0.1, 0x1234);
 	OutputDebugMessage<wchar_t>(L"%s%d%c%f%x", L"abc", 1, 'X', 0.1, 0x1234);
 	OutputDebugMessage<wchar_t>(100, L"%s%d%c%f%x", L"abc", 1, 'X', 0.1, 0x1234);
+
+	string str = "abcdefg";
+	string sub = "EfG";
+	int pos = stristr(str, sub);
+	wstring wstr = L"ABCED";
+	int pos1 = StrIStr<wstring>(wstr, L"abce");
 }

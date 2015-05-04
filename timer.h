@@ -1,4 +1,4 @@
-#ifndef TIMER_H
+ï»¿#ifndef TIMER_H
 #define TIMER_H
 
 #include <windows.h>
@@ -15,7 +15,7 @@ public:
 		:highPrecision(true)
 	{	
 		highPrecision=true;
-		QueryPerformanceFrequency(&frequency);	//»ñµÃ¼ÆÊ±Æ÷µÄÊ±ÖÓÆµÂÊ			
+		QueryPerformanceFrequency(&frequency);	//è·å¾—è®¡æ—¶å™¨çš„æ—¶é’Ÿé¢‘ç‡			
 		QueryPerformanceCounter(&start);		//1us
 		if (0 == start.QuadPart) {				
 			OutputDebugStringA("INFO: timer does not support high-precision!");
@@ -28,7 +28,7 @@ public:
 	{
 	}
 
-	//µ¥Î»Îªs
+	//å•ä½ä¸ºs
 	double Escape()
 	{
 		if (highPrecision) {
@@ -41,7 +41,7 @@ public:
 		}
 	}
 
-	//ÖØĞÂ¼ÇÂ¼¿ªÊ¼Ê±¼ä
+	//é‡æ–°è®°å½•å¼€å§‹æ—¶é—´
 	void Reset()
 	{
 		if (highPrecision) {

@@ -3,6 +3,8 @@
 
 #include <vector>
 #include <tuple>
+#include <algorithm>
+#include <cctype>
 using namespace std;
 
 #include "winapi.hpp"
@@ -23,6 +25,7 @@ namespace Common{
 #define format_string			FormatString<char>
 #define format_append			FormatAppend<char>
 #define output_debug_message	OutputDebugMessage<char>
+#define stristr					StrIStr<string>
 
 	//replace "ab" with "a", result : "abb" => "a"
 	template<typename T>
@@ -280,6 +283,28 @@ namespace Common{
 		va_end(ap);
 		STRCAT_S(T)(buf, 1024, LITERAL(T, "\n"));
 		OUTPUTDEBUGSTRING(T)(buf);
+	}
+
+
+	template<typename T>
+	struct StringEqual
+	{
+		bool operator()(T ch1, T ch2)
+		{
+			return std::toupper(ch1) == std::toupper(ch2);
+		}
+	};
+
+	//find sub string case-insensively
+	//if found, return start pos. otherwise, return -1.
+	template<typename T>
+	int StrIStr(const T& str, const T& sub)
+	{
+		T::const_iterator it = std::search(str.begin(), str.end(), sub.begin(), sub.end(), StringEqual<T::value_type>());
+		if (it == str.end())
+			return -1;
+		else
+			return it - str.begin();
 	}
 }
 

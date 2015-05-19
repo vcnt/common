@@ -77,8 +77,10 @@ void test_string_hpp()
 	string fmt3 = format_string("%s%d%c%f%x", "abc", 1, 'X', 0.1, 0x1234);
 
 	string append = "1 + 2 = ";
+	string& append_ref = FormatAppend<char>(append, 20, "%d", 3);
 	string append1 = FormatAppend<char>(append, 20, "%d", 3);
 	wstring append2 = L"abc + def = ";
+	wstring& append2_ref = FormatAppend<wchar_t>(append2, L"%s%s", L"abc", L"def");
 	wstring append3 = FormatAppend<wchar_t>(append2, L"%s%s", L"abc", L"def");
 
 	OutputDebugMessage<char>("%s%d%c%f%x", "abc", 1, 'X', 0.1, 0x1234);

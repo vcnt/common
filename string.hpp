@@ -114,6 +114,7 @@ namespace Common{
 		return make_tuple<T, T>(beg, end);
 	}
 
+	//
 	template<typename T>
 	basic_string<T>& Quote(basic_string<T>& str, T ch = '"')
 	{
@@ -234,7 +235,7 @@ namespace Common{
 	}
 
 	template<typename T>
-	basic_string<T> FormatAppend( const basic_string<T>& pre, int size, const T* fmt, ... )
+	basic_string<T>& FormatAppend( basic_string<T>& pre, int size, const T* fmt, ... )
 	{
 		T* buf = new T[size];
 		va_list ap;
@@ -242,20 +243,22 @@ namespace Common{
 		VSPRINTF_S(T)(buf, size, fmt, ap);
 		va_end(ap);
 		basic_string<T> append(buf);
+		pre.append(buf);
 		delete []buf;
-		return basic_string<T>(pre + append);
+		return pre;
 	}
 
 	//format string is limited in 1024 characters
 	template<typename T>
-	basic_string<T> FormatAppend( const basic_string<T>& pre, const T* fmt, ... )
+	basic_string<T>& FormatAppend( basic_string<T>& pre, const T* fmt, ... )
 	{
 		T buf[1024] = {0};
 		va_list ap;
 		va_start(ap, fmt);
 		VSPRINTF_S(T)(buf, 1024, fmt, ap);
 		va_end(ap);
-		return basic_string<T>(pre).append(buf);
+		pre.append(buf);
+		return pre;
 	}
 
 	template<typename T>

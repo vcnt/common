@@ -8,7 +8,7 @@
 #include <locale.h>
 #include <direct.h>
 
-namespace Common{
+namespace common{
 
 	string WS2S(const wstring& ws)
 	{

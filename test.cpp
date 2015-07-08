@@ -1,7 +1,7 @@
 #include "stdafx.h"
 #include "path.hpp"
 #include "string.hpp"
-using namespace Common;
+using namespace common;
 
 void test_path_hpp()
 {

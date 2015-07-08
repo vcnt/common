@@ -6,6 +6,4 @@
 #include "path.hpp"
 #include "timer.h"
 
-using namespace Common;
-
 #endif

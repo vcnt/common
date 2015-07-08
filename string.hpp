@@ -9,7 +9,7 @@ using namespace std;
 
 #include "winapi.hpp"
 
-namespace Common{
+namespace common{
 
 #define replace_all				ReplaceAll<char>
 #define get_replace_all			GetReplaceAll<char>

@@ -7,7 +7,7 @@
 
 #pragma comment(lib, "winmm.lib")//timeGetTime
 
-namespace Common {
+namespace common {
 class timer
 {
 public:

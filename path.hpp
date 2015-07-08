@@ -8,7 +8,7 @@
 
 using namespace std;
 
-namespace Common{
+namespace common{
 
 #define get_exe_dir				GetExeDir<char>
 #define get_current_dir			GetCurrentDir<char>
@@ -21,7 +21,7 @@ namespace Common{
 
 	//************************************
 	// Method:    GetExeDir
-	// FullName:  Common<T>::GetExeDir
+	// FullName:  common<T>::GetExeDir
 	// Access:    public 
 	// Returns:   
 	// Qualifier:
@@ -53,7 +53,7 @@ namespace Common{
 
 	//************************************
 	// Method:    GetCurrentDir
-	// FullName:  Common<T>::GetCurrentDir
+	// FullName:  common<T>::GetCurrentDir
 	// Access:    public 
 	// Returns:   
 	// Qualifier:
@@ -71,7 +71,7 @@ namespace Common{
 
 	//************************************
 	// Method:    GetPathFolderName
-	// FullName:  Common<T>::GetPathFolderName
+	// FullName:  common<T>::GetPathFolderName
 	// Access:    public 
 	// Returns:   
 	// Qualifier:
@@ -105,7 +105,7 @@ namespace Common{
 
 	//************************************
 	// Method:    GetPathDirectory
-	// FullName:  Common<T>::GetPathDirectory
+	// FullName:  common<T>::GetPathDirectory
 	// Access:    public 
 	// Returns:   
 	// Qualifier:
@@ -125,7 +125,7 @@ namespace Common{
 
 	//************************************
 	// Method:    GetPathFilename
-	// FullName:  Common<T>::GetPathFilename
+	// FullName:  common<T>::GetPathFilename
 	// Access:    public 
 	// Returns:   
 	// Qualifier:
@@ -144,7 +144,7 @@ namespace Common{
 
 	//************************************
 	// Method:    GetPathExtension
-	// FullName:  Common<T>::GetPathExtension
+	// FullName:  common<T>::GetPathExtension
 	// Access:    public 
 	// Returns:   
 	// Qualifier:
@@ -163,7 +163,7 @@ namespace Common{
 
 	//************************************
 	// Method:    GetPathFullname
-	// FullName:  Common<T>::GetPathFullname
+	// FullName:  common<T>::GetPathFullname
 	// Access:    public 
 	// Returns:   
 	// Qualifier:
@@ -182,7 +182,7 @@ namespace Common{
 
 	//************************************
 	// Method:    GetPathFullname
-	// FullName:  Common<T>::GetPathFullname
+	// FullName:  common<T>::GetPathFullname
 	// Access:    public 
 	// Returns:   
 	// Qualifier:
